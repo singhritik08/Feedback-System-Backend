@@ -1,6 +1,8 @@
 package com.feedbck_system.Feedback.Service.ServiceImpl;
 
+import com.feedbck_system.Feedback.Controller.UserController;
 import com.feedbck_system.Feedback.Model.Entity.FeedBack;
+import com.feedbck_system.Feedback.Model.Entity.FeedbackResponse;
 import com.feedbck_system.Feedback.Model.Request.FeedbackRequest;
 import com.feedbck_system.Feedback.Repository.FeedbackRepository;
 import com.feedbck_system.Feedback.Service.FeedbackService;
@@ -14,6 +16,8 @@ import java.util.Optional;
 public class FeedbackServiceImpl implements FeedbackService {
     @Autowired
     private FeedbackRepository feedbackRepository;
+    private UserController userController;
+    
 
     @Override
     public FeedBack submitFeedback(FeedbackRequest feedbackRequest) {
@@ -42,10 +46,28 @@ public class FeedbackServiceImpl implements FeedbackService {
     }
 
     @Override
-    public Optional<FeedBack> getFeedbackByStudentId(String studentId) {
-        if (!feedbackRepository.existsById(studentId)){
-            return feedbackRepository.findById(studentId);
-        }
-        return Optional.empty();
+    public List<FeedBack> getFeedbackByStudentId(String studentId) {
+        return feedbackRepository.findByStudentId(studentId);
     }
+
+
+    @Override
+    public FeedBack respondToFeedback(String feedbackId, FeedbackResponse response, String userRole) {
+        if (!"admin".equals(userController.getUserRoleById(response.getAdminId()))) {
+            throw new RuntimeException("Only admins can respond to feedback.");
+        }
+
+        Optional<FeedBack> optionalFeedback = feedbackRepository.findById(feedbackId);
+
+        if (optionalFeedback.isPresent()) {
+            FeedBack feedback = optionalFeedback.get();
+            feedback.setFeedbackResponse(response);
+            return feedbackRepository.save(feedback);
+        } else {
+            throw new RuntimeException("Feedback not found");
+        }
+    }
+
+
+
 }

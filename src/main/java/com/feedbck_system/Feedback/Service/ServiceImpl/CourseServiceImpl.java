@@ -15,6 +15,8 @@ public class CourseServiceImpl implements CourseService {
     @Autowired
     private CourseRepository courseRepository;
 
+    //todo Only admin can create Course
+
     @Override
     public Course createCourse(CourseRequest courseRequest) {
         if(!courseRepository.existsByCourseName(courseRequest.getCourseName())){

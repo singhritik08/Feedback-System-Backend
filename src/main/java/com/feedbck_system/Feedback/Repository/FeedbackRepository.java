@@ -4,7 +4,13 @@ import com.feedbck_system.Feedback.Model.Entity.FeedBack;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.Optional;
+
 @Repository
 public interface FeedbackRepository extends MongoRepository<FeedBack,String> {
+
+    Optional<FeedBack> findById(String studentId);
+    List<FeedBack> findByStudentId(String studentId);
 
 }

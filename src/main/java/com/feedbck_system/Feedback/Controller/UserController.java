@@ -24,13 +24,22 @@ public class UserController {
     public boolean getUser(@RequestBody LoginRequest loginRequest) {
         return userService.getUser(loginRequest);
     }
+
     @GetMapping("/fetch/All/Users")
     public List<User> findAllUsers(){
         return userService.findAllUsers();
     }
+
     @GetMapping("/profile/by/phone")
     public Optional<User> getUserProfile(@RequestParam String phone){
         return userService.getUserProfile(phone);
     }
+
+    @GetMapping("get/UserRole/ById")
+    public String getUserRoleById(String userId){
+        return userService.getUserRoleById(userId);
+    }
+
+
 
 }

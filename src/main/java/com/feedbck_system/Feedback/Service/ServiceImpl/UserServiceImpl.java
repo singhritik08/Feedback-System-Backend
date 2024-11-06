@@ -19,13 +19,13 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User signUp(UserRequest userRequest) {
-        if (!userRepository.existsByPhoneNumber(userRequest.getPhone())){
+        if (!userRepository.existsByPhone(userRequest.getPhone())){
             if (!userRepository.existsByUsername(userRequest.getUsername())) {
                 User user = new User();
                 user.setRole(userRequest.getRole());
                 user.setUsername(userRequest.getUsername());
                 user.setPassword(userRequest.getPassword());
-                user.setPhoneNumber(userRequest.getPhone());
+                user.setPhone(userRequest.getPhone());
                 return userRepository.save(user);
             } else {
                 // return when already phoneNumber exists.
@@ -64,5 +64,13 @@ public class UserServiceImpl implements UserService{
             return Optional.empty();
         }
     }
+
+    @Override
+    public String getUserRoleById(String userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+        return user.getRole();
+    }
+
+
 
 }

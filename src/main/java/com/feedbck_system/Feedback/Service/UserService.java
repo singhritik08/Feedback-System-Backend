@@ -16,4 +16,5 @@ public interface UserService {
 
     Optional<User> getUserProfile(String phone);
 
+    String getUserRoleById(String userId);
 }
