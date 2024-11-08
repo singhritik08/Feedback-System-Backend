@@ -12,6 +12,7 @@ import org.springframework.data.annotation.Id;
 @NoArgsConstructor
 public class FeedbackResponse {
     @Id
+    private String feedBackResponseId;
     private String adminId;
     private String responseText;
 }

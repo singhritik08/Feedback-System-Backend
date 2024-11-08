@@ -14,7 +14,7 @@ public interface UserService {
 
     List<User> findAllUsers();
 
-    Optional<User> getUserProfile(String phone);
+    User getUserProfile(String phone);
 
     String getUserRoleById(String userId);
 }

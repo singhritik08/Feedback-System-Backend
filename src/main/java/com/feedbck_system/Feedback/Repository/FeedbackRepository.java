@@ -10,7 +10,7 @@ import java.util.Optional;
 @Repository
 public interface FeedbackRepository extends MongoRepository<FeedBack,String> {
 
-    Optional<FeedBack> findById(String studentId);
     List<FeedBack> findByStudentId(String studentId);
 
+    FeedBack findByFeedbackId(String feedbackId);
 }

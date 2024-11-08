@@ -29,8 +29,8 @@ public class FeedbackController {
     }
 
     @PutMapping("reponse/to/feedback")
-    public FeedBack respondToFeedback(String studentId, FeedbackResponse response, String userRole) {
-        return feedbackService.respondToFeedback(studentId,response,userRole);
+    public FeedBack respondToFeedback(@RequestBody FeedbackResponse response,@RequestParam String feedBackId ) {
+        return feedbackService.respondToFeedback(feedBackId,response);
     }
 
     @GetMapping("/get/all/feedback")

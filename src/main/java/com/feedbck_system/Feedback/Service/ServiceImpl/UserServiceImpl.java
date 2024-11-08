@@ -54,21 +54,27 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public Optional<User> getUserProfile(String phone) {
+    public User getUserProfile(String phone) {
         User user = userRepository.findByPhone(phone);
         if (user != null) {
-            String id = user.getId();
-            return userRepository.findById(id);
+            String id = user.getUserId();
+            return userRepository.findByUserId(id);
 
         } else {
-            return Optional.empty();
+            return new User();
         }
     }
 
     @Override
     public String getUserRoleById(String userId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
-        return user.getRole();
+//        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+//        return user.getRole();
+        User user = userRepository.findByUserId(userId);
+        if (user == null){
+            return null;
+        }else {
+            return user.getRole();
+        }
     }
 
 

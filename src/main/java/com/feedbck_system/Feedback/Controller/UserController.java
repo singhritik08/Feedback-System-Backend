@@ -31,12 +31,12 @@ public class UserController {
     }
 
     @GetMapping("/profile/by/phone")
-    public Optional<User> getUserProfile(@RequestParam String phone){
+    public User getUserProfile(@RequestParam String phone){
         return userService.getUserProfile(phone);
     }
 
     @GetMapping("get/UserRole/ById")
-    public String getUserRoleById(String userId){
+    public String getUserRoleById( @RequestParam String userId){
         return userService.getUserRoleById(userId);
     }
 

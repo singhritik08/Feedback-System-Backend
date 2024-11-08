@@ -6,6 +6,7 @@ import com.feedbck_system.Feedback.Model.Entity.FeedbackResponse;
 import com.feedbck_system.Feedback.Model.Request.FeedbackRequest;
 import com.feedbck_system.Feedback.Repository.FeedbackRepository;
 import com.feedbck_system.Feedback.Service.FeedbackService;
+import com.feedbck_system.Feedback.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +17,9 @@ import java.util.Optional;
 public class FeedbackServiceImpl implements FeedbackService {
     @Autowired
     private FeedbackRepository feedbackRepository;
-    private UserController userController;
-    
+    @Autowired
+    private UserService userService;
+
 
     @Override
     public FeedBack submitFeedback(FeedbackRequest feedbackRequest) {
@@ -52,18 +54,19 @@ public class FeedbackServiceImpl implements FeedbackService {
 
 
     @Override
-    public FeedBack respondToFeedback(String feedbackId, FeedbackResponse response, String userRole) {
-        if (!"admin".equals(userController.getUserRoleById(response.getAdminId()))) {
+    public FeedBack respondToFeedback(String feedbackId, FeedbackResponse response) {
+        String Role= userService.getUserRoleById(response.getAdminId());
+        if (!"admin".equals(Role)) {
             throw new RuntimeException("Only admins can respond to feedback.");
         }
 
-        Optional<FeedBack> optionalFeedback = feedbackRepository.findById(feedbackId);
-
-        if (optionalFeedback.isPresent()) {
-            FeedBack feedback = optionalFeedback.get();
-            feedback.setFeedbackResponse(response);
-            return feedbackRepository.save(feedback);
-        } else {
+        FeedBack feedback = feedbackRepository.findByFeedbackId(feedbackId);
+    if (feedback != null){
+        feedback.setFeedbackResponse(response);
+        feedbackRepository.save(feedback);
+        return feedback;
+    }
+         else {
             throw new RuntimeException("Feedback not found");
         }
     }

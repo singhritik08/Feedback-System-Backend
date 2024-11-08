@@ -13,7 +13,6 @@ public interface FeedbackService {
 
     List<FeedBack> getFeedbackByStudentId(String studentId);
 
-//    FeedBack respondToFeedback(String studentId, FeedbackResponse response);
 
-    FeedBack respondToFeedback(String feedbackId, FeedbackResponse response, String userRole);
+    FeedBack respondToFeedback(String feedbackId, FeedbackResponse response);
 }
