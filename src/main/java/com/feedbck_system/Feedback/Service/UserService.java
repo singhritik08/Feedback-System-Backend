@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface UserService {
     User signUp(UserRequest userRequest);
 
-    boolean getUser(LoginRequest loginRequest);
+    User getUser(LoginRequest loginRequest);
 
     List<User> findAllUsers();
 

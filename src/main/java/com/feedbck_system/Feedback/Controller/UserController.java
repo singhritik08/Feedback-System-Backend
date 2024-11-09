@@ -12,6 +12,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/user/")
+@CrossOrigin("*")
 public class UserController {
     @Autowired
     private UserService userService;
@@ -20,8 +21,9 @@ public class UserController {
     public User signUp(@RequestBody UserRequest userRequest) {
         return userService.signUp(userRequest);
     }
+
     @PostMapping("/login")
-    public boolean getUser(@RequestBody LoginRequest loginRequest) {
+    public User getUser(@RequestBody LoginRequest loginRequest) {
         return userService.getUser(loginRequest);
     }
 
