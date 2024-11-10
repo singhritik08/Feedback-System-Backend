@@ -1,5 +1,6 @@
 package com.feedbck_system.Feedback.Service.ServiceImpl;
 
+import com.feedbck_system.Feedback.Exception.FeedbackException;
 import com.feedbck_system.Feedback.Model.Request.LoginRequest;
 import com.feedbck_system.Feedback.Model.Request.UserRequest;
 import com.feedbck_system.Feedback.Model.Entity.User;
@@ -19,7 +20,7 @@ public class UserServiceImpl implements UserService{
     private UserRepository userRepository;
 
     @Override
-    public User signUp(UserRequest userRequest) {
+    public User signUp(UserRequest userRequest) throws FeedbackException {
         if (!userRepository.existsByPhone(userRequest.getPhone())){
             if (!userRepository.existsByUsername(userRequest.getUsername())) {
                 User user = new User();
@@ -29,12 +30,10 @@ public class UserServiceImpl implements UserService{
                 user.setPhone(userRequest.getPhone());
                 return userRepository.save(user);
             } else {
-                // return when already phoneNumber exists.
-                return new User();
+                throw new FeedbackException("User Name Already Exists!");
             }
         } else {
-            /// return when username already exists.
-            return new User();
+            throw new FeedbackException("Phone Number Already Exists!");
         }
     }
 

@@ -11,10 +11,11 @@ import lombok.Setter;
 @NoArgsConstructor
 public class FeedbackRequest {
 
-    private String studentId;
+    private String userId;
     private String courseId;
     private String instructor;
     private int rating;
     private String comments;
+
 }
 

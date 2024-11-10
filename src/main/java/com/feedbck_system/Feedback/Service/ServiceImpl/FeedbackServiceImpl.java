@@ -1,6 +1,6 @@
 package com.feedbck_system.Feedback.Service.ServiceImpl;
 
-import com.feedbck_system.Feedback.Controller.UserController;
+import com.feedbck_system.Feedback.Exception.FeedbackException;
 import com.feedbck_system.Feedback.Model.Entity.FeedBack;
 import com.feedbck_system.Feedback.Model.Entity.FeedbackResponse;
 import com.feedbck_system.Feedback.Model.Request.FeedbackRequest;
@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class FeedbackServiceImpl implements FeedbackService {
@@ -23,24 +22,25 @@ public class FeedbackServiceImpl implements FeedbackService {
 
     @Override
     public FeedBack submitFeedback(FeedbackRequest feedbackRequest) {
-        if (!feedbackRepository.existsById(feedbackRequest.getStudentId())){
-            if (!feedbackRepository.existsById(feedbackRequest.getCourseId())){
-                FeedBack feedBack = new FeedBack();
-                feedBack.setCourseId(feedbackRequest.getCourseId());
-                feedBack.setStudentId(feedbackRequest.getStudentId());
-                feedBack.setInstructor(feedbackRequest.getInstructor());
-                feedBack.setRating(feedbackRequest.getRating());
-                feedBack.setComments(feedbackRequest.getComments());
-                return feedbackRepository.save(feedBack);
-            }
-            else {
-                return new FeedBack();
-            }
-        }else {
-            return new FeedBack();
+        if (feedbackRequest.getRating() < 1 || feedbackRequest.getRating() > 5) {
+            throw new FeedbackException("Rating must be between 1 and 5.");
+        }
+        if (feedbackRequest.getComments() == null || feedbackRequest.getComments().trim().isEmpty()) {
+            throw new FeedbackException("Comments cannot be empty.");
+        }
+
+        FeedBack feedBack = new FeedBack();
+        feedBack.setCourseId(feedbackRequest.getCourseId());
+        feedBack.setUserId(feedbackRequest.getUserId());
+        feedBack.setInstructor(feedbackRequest.getInstructor());
+        feedBack.setRating(feedbackRequest.getRating());
+        feedBack.setComments(feedbackRequest.getComments());
+        try {
+            return feedbackRepository.save(feedBack);
+        } catch (Exception e) {
+            throw new FeedbackException("error: Feedback not saved");
         }
     }
-
 
     @Override
     public List<FeedBack> getAllFeedback() {
@@ -48,8 +48,8 @@ public class FeedbackServiceImpl implements FeedbackService {
     }
 
     @Override
-    public List<FeedBack> getFeedbackByStudentId(String studentId) {
-        return feedbackRepository.findByStudentId(studentId);
+    public List<FeedBack> getFeedbackByUserId(String userId) {
+        return feedbackRepository.getFeedbackByUserId(userId);
     }
 
 

@@ -11,8 +11,9 @@ public interface FeedbackService {
 
     List<FeedBack> getAllFeedback();
 
-    List<FeedBack> getFeedbackByStudentId(String studentId);
 
 
     FeedBack respondToFeedback(String feedbackId, FeedbackResponse response);
+
+    List<FeedBack> getFeedbackByUserId(String userId);
 }

@@ -1,10 +1,13 @@
 package com.feedbck_system.Feedback.Controller;
 
+import com.feedbck_system.Feedback.Exception.FeedbackException;
 import com.feedbck_system.Feedback.Model.Request.LoginRequest;
 import com.feedbck_system.Feedback.Model.Request.UserRequest;
 import com.feedbck_system.Feedback.Model.Entity.User;
 import com.feedbck_system.Feedback.Service.UserService;
+import com.feedbck_system.Feedback.base.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,8 +21,8 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/signup")
-    public User signUp(@RequestBody UserRequest userRequest) {
-        return userService.signUp(userRequest);
+    public ApiResponse<User> signUp(@RequestBody UserRequest userRequest){
+        return new ApiResponse<>(userService.signUp(userRequest), HttpStatus.ACCEPTED);
     }
 
     @PostMapping("/login")

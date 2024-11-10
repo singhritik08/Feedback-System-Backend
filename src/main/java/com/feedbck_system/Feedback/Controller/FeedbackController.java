@@ -12,6 +12,8 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("api/feedback")
+@CrossOrigin("*")
+
 public class FeedbackController {
     @Autowired
     private FeedbackService feedbackService;
@@ -24,8 +26,8 @@ public class FeedbackController {
     }
 
     @GetMapping("get/feedback/by/student/id")
-    public  List<FeedBack> getFeedbackByStudentId(@RequestParam String studentId){
-        return feedbackService.getFeedbackByStudentId(studentId);
+    public  List<FeedBack> getFeedbackByUserId(@RequestParam String userId){
+        return feedbackService.getFeedbackByUserId(userId);
     }
 
     @PutMapping("reponse/to/feedback")

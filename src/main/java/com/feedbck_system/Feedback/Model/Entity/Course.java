@@ -11,14 +11,14 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Document("Courses")
+@Document(collection = "Courses")
 
 public class Course {
     @Id
     private String courseId;
     private String courseName;
     private  String description;
-    private  String instructors;
+    private  String instructor;
 
 
 }

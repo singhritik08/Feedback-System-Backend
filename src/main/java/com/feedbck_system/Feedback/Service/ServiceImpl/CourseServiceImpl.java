@@ -23,10 +23,9 @@ public class CourseServiceImpl implements CourseService {
             Course newCourse = new Course();
             newCourse.setCourseName(courseRequest.getCourseName());
             newCourse.setDescription(courseRequest.getDescription());
-            newCourse.setInstructors(courseRequest.getInstructors());
+            newCourse.setInstructor(courseRequest.getInstructor());
             return courseRepository.save(newCourse);
         }else {
-            // return null if course already exists
             return new Course();
         }
     }
