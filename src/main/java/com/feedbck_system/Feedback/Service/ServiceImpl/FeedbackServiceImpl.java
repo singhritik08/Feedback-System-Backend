@@ -77,11 +77,6 @@ public class FeedbackServiceImpl implements FeedbackService {
 
     @Override
     public FeedBack respondToFeedback(FeedbackResponse response) {
-        String Role= userService.getUserRoleById(response.getAdminId());
-        if (!"admin".equals(Role)) {
-            throw new RuntimeException("Only admins can respond to feedback.");
-        }
-
         FeedBack feedback = feedbackRepository.findByFeedbackId(response.getFeedbackId());
     if (feedback != null){
         feedback.setFeedbackResponse(response);

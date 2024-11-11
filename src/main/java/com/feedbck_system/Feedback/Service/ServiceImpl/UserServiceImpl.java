@@ -22,17 +22,14 @@ public class UserServiceImpl implements UserService{
     @Override
     public User signUp(UserRequest userRequest) throws FeedbackException {
         if (!userRepository.existsByPhone(userRequest.getPhone())){
-            if (!userRepository.existsByUsername(userRequest.getUsername())) {
                 User user = new User();
                 user.setRole(userRequest.getRole());
                 user.setUsername(userRequest.getUsername());
                 user.setPassword(userRequest.getPassword());
                 user.setPhone(userRequest.getPhone());
                 return userRepository.save(user);
-            } else {
-                throw new FeedbackException("User Name Already Exists!");
             }
-        } else {
+         else {
             throw new FeedbackException("Phone Number Already Exists!");
         }
     }
