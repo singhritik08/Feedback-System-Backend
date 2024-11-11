@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Getter
 @Setter
@@ -13,8 +14,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 @Document(collection = "FeedbackResponses")
 public class FeedbackResponse {
-    @Id
-    private String feedBackResponseId;
+
     private String adminId;
+    private String feedbackId;
     private String responseText;
 }

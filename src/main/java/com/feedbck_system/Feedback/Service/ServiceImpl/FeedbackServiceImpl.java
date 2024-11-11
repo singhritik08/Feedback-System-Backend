@@ -10,6 +10,7 @@ import com.feedbck_system.Feedback.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -52,15 +53,36 @@ public class FeedbackServiceImpl implements FeedbackService {
         return feedbackRepository.getFeedbackByUserId(userId);
     }
 
+    @Override
+    public List<FeedBack> getFeedbackByCourseId(String courseId) {
+        List<FeedBack> feedbackList = feedbackRepository.findByCourseId(courseId);
+
+        if (feedbackList != null && !feedbackList.isEmpty()) {
+            return feedbackList;
+        } else {
+
+            return new ArrayList<>();
+        }
+    }
 
     @Override
-    public FeedBack respondToFeedback(String feedbackId, FeedbackResponse response) {
+    public boolean getIfResponded(String feedbackId) {
+        FeedBack feedBack = feedbackRepository.findByFeedbackId(feedbackId);
+        if (feedBack != null && feedBack.getFeedbackResponse() != null) {
+            return true;
+        }
+        return false;
+    }
+
+
+    @Override
+    public FeedBack respondToFeedback(FeedbackResponse response) {
         String Role= userService.getUserRoleById(response.getAdminId());
         if (!"admin".equals(Role)) {
             throw new RuntimeException("Only admins can respond to feedback.");
         }
 
-        FeedBack feedback = feedbackRepository.findByFeedbackId(feedbackId);
+        FeedBack feedback = feedbackRepository.findByFeedbackId(response.getFeedbackId());
     if (feedback != null){
         feedback.setFeedbackResponse(response);
         feedbackRepository.save(feedback);

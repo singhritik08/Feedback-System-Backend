@@ -66,8 +66,6 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public String getUserRoleById(String userId) {
-//        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
-//        return user.getRole();
         User user = userRepository.findByUserId(userId);
         if (user == null){
             return null;
@@ -76,6 +74,15 @@ public class UserServiceImpl implements UserService{
         }
     }
 
+    @Override
+    public User getUsernameByUserId(String userId) {
+        User user = userRepository.findByUserId(userId);
+        if (user == null){
+            return null;
+        }else {
+            return user;
+        }
+    }
 
 
 }

@@ -30,7 +30,7 @@ public class CourseController {
     }
 
     @GetMapping("/course/by/id")
-    public Optional<Course> getCourseById(@RequestParam String id) {
+    public Optional<Course> getCourseByCourseId(@RequestParam String id) {
         return courseService.getCourseById(id);
     }
 

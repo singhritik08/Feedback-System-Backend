@@ -18,4 +18,6 @@ public interface UserService {
     User getUserProfile(String phone);
 
     String getUserRoleById(String userId);
+
+    User getUsernameByUserId(String userId);
 }

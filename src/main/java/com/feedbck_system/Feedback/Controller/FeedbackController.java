@@ -30,13 +30,23 @@ public class FeedbackController {
         return feedbackService.getFeedbackByUserId(userId);
     }
 
-    @PutMapping("reponse/to/feedback")
-    public FeedBack respondToFeedback(@RequestBody FeedbackResponse response,@RequestParam String feedBackId ) {
-        return feedbackService.respondToFeedback(feedBackId,response);
+    @PutMapping("respond/to/feedback")
+    public FeedBack respondToFeedback(@RequestBody FeedbackResponse response) {
+        return feedbackService.respondToFeedback(response);
+    }
+
+    @GetMapping("get/feedback/by/courseId")
+    public List<FeedBack> getFeedbackByCourseId(@RequestParam String courseId){
+        return feedbackService.getFeedbackByCourseId(courseId);
     }
 
     @GetMapping("/get/all/feedback")
     public List<FeedBack> getAllFeedback() {
         return feedbackService.getAllFeedback();
+    }
+
+    @GetMapping("get/if/responded")
+    public boolean getIfResponded(@RequestParam String feedbackId){
+        return feedbackService.getIfResponded(feedbackId);
     }
 }
