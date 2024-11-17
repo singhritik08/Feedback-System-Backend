@@ -31,7 +31,7 @@ public class CourseServiceImpl implements CourseService {
                 newCourse.setInstructor(courseRequest.getInstructor());
                 return courseRepository.save(newCourse);
             }else {
-                return new Course();
+                throw new FeedbackException("Course already exists");
             }
         }else {
             throw new FeedbackException("Only Admin is authorized to Add Course");
